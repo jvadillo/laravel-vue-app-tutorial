@@ -11,8 +11,10 @@ El código de este proyecto contiene una aplicación desarrollada con Laravel y 
 
 ### Crear la API con los datos de Productos y Categorias
 
+Crea los modelos `Product` y `Category` junto con sus migraciones correspondientes:
+
 ```
-php artisan make:model Category -mcr
+php artisan make:model Category -m
 ```
 
 ```php
@@ -29,7 +31,7 @@ public function up()
 ```
 
 ```
-php artisan make:model Product -mcr
+php artisan make:model Product -m
 ```
 
 ```php
@@ -46,9 +48,13 @@ public function up()
 }
 ```
 
+Ejecuta las migraciones para crear las tablas en la base de datos:
+
 ```
 sail artisan migrate
 ```
+
+La implementación de los modelos incluirán los métodos `products()` y `category()` que hacen referencia a la relación one-to-many existente entre los modelos:
 
 ```php
 <?php
@@ -92,6 +98,7 @@ class Product extends Model
 }
 ```
 
+A continuación crearemos datos de prueba en la base de datos:
 
 ```
 sail artisan make:factory CategoryFactory
@@ -142,14 +149,18 @@ class DatabaseSeeder extends Seeder
 }
 ```
 
+Una vez tenemos preparadas las factories y el seeder, ya solo queda volver a lanzar la migración indicando el flag `--seed`:
+
 ```
 sail artisan migrate:refresh --seed
 ```
 
-Crear los controladores CategoryController y ProductController. A la hora de ejecutar el comando de artisan, añadiremos el sufijo Api/ para que los cree dentro del directorio: 
+El siguiente paso será crear los controladores `CategoryController` y `ProductController`. A la hora de ejecutar el comando de artisan, añadiremos el sufijo `Api/` en el nombre de cada controlador para que los cree dentro del directorio `/Api`: 
 
+```
 sail artisan make:controller Api/CategoryController
 sail artisan make:controller Api/ProductController
+```
 
 Por el momento los controladores solamente implementarán el método `index` y devolverán todas las categorías y productos respectivamente:
 
@@ -193,7 +204,7 @@ class ProductController extends Controller
 
 En el futuro mejoraremos el código anterior para que los controladores, en lugar de deolver los modelos completos, devuelvan únicamente los atributos que el frontend requiere. 
 
-A continuación crearemos las rutas de `routes/api.php` para comprobar que los datos se muestran correctamente:
+A continuación crearemos las rutas en `routes/api.php` para así poder acceder a los métodos de los controladores que devuelven los datos:
 
 ```php
 Route::get('categories', [CategoryController::class, 'index']);
