@@ -505,6 +505,7 @@ Crea una nueva carpeta en `resources/js` llamada `components`. En ella crearemos
 Empezaremos por crear el componente `Front.vue`, por lo que crearemos un nuevo archivo llamado `Front.vue` en el directorio `resources/js/components`. Los componentes de Vue tienen dos partes, <template> y <script>. De momento cogeremos el contenido principal de la vista `home.blade.php` que habíamos creado y lo copiaremos en `Front.vue`:
 
 ```html
+<template>
 <div class="container pt-5">
   <div class="row">
     <!-- Blog entries-->
@@ -557,66 +558,34 @@ Empezaremos por crear el componente `Front.vue`, por lo que crearemos un nuevo a
           </div>
         </div>
       </div>
-      <!-- Pagination-->
-      <nav aria-label="Pagination">
-        <hr class="my-0" />
-        <ul class="pagination justify-content-center my-4">
-          <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-          <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-          <li class="page-item"><a class="page-link" href="#!">2</a></li>
-          <li class="page-item"><a class="page-link" href="#!">3</a></li>
-          <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-          <li class="page-item"><a class="page-link" href="#!">15</a></li>
-          <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-        </ul>
-      </nav>
+      
     </div>
     <!-- Side widgets-->
     <div class="col-lg-4">
       <!-- Categories widget-->
       <div class="card mb-4">
-        <div class="card-header">Categories v2</div>
+        <div class="card-header">Categories</div>
         <div class="card-body p-0">
           <div class="list-group list-group-flush">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 1</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 2</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 3</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 4</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 5</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
           </div>
         </div>
       </div>
-      <!-- Categories widget-->
-      <div class="card mb-4">
-        <div class="card-header">Categories</div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-6">
-              <ul class="list-unstyled mb-0">
-                <li><a href="#!">Web Design</a></li>
-                <li><a href="#!">HTML</a></li>
-                <li><a href="#!">Freebies</a></li>
-              </ul>
-            </div>
-            <div class="col-sm-6">
-              <ul class="list-unstyled mb-0">
-                <li><a href="#!">JavaScript</a></li>
-                <li><a href="#!">CSS</a></li>
-                <li><a href="#!">Tutorials</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <!-- Side widget-->
       <div class="card mb-4">
-        <div class="card-header">Side Widget</div>
-        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+        <div class="card-header">Acerca de</div>
+        <div class="card-body">Esta es una aplicación de ejemplo utilizando Laravel y Vue. Sigue aprendiendo más en <a href="https://laravel9.netlify.app">laravel9.netlify.app</div>
       </div>
     </div>
   </div>
 </div>
+</template>
 ```
 
 El siguiente paso es decirle a nuestra aplicación que cargue el componente creado. En primer lugar, definiremos un `div` dentro de `home.blade.php` donde ubicaremos nuestro componente:
@@ -639,6 +608,143 @@ app.mount('#app');
 ```
 
 Vuelve a lanzar el comando ``npm run build` y carga tu página en el navegador. Deberás ver la página completa, la cual estará cargando el contenido principal utilizando Vuejs.
+
+El siguiente paso es definir la parte del componente `Front.vue` donde se cargarán los datos del componente:
+
+```js
+<template>
+...
+</template>
+
+<script>
+    export default {
+        data: function () {
+            return {
+                categories: [], // Listado de categorias
+                products: [], // Listado de productos
+            }
+        },
+        mounted() {
+            this.loadCategories();
+            this.loadProducts();
+        },
+        methods: {
+            loadCategories: function () {
+                axios.get('/api/categories')
+                    .then((response) => {
+                        this.categories = response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+            loadProducts: function () {
+                axios.get('/api/products')
+                    .then((response) => {
+                        this.products = response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        }
+    }
+</script>
+```
+
+Ahora que ya tenemos definidos los datos del componente y la carga de los mismos mediante funciones, modificaremos la parte de la plantilla para que muestre los datos obtenidos desde la API:
+
+```html
+<template>
+<template>
+<div class="container pt-5">
+  <div class="row">
+    <!-- Blog entries-->
+    <div class="col-lg-8">
+
+      <!-- Nested row for non-featured blog posts-->
+      <div class="row">
+        <div class="col-lg-6" v-for="product in products">
+          <!-- Blog post-->
+          <div class="card mb-4">
+            <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+            <div class="card-body">
+              <div class="small text-muted">{{ product.category }}</div>
+              <h2 class="card-title h4">{{ product.name }}</h2>
+              <p class="card-text">{{ product.description }}</p>
+              <a class="btn btn-primary" href="#!">Read more →</a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <!-- Side widgets-->
+    <div class="col-lg-4">
+      <!-- Categories widget-->
+      <div class="card mb-4">
+        <div class="card-header">Categories</div>
+        <div class="card-body p-0">
+          <div class="list-group list-group-flush">
+            <a @click.stop.prevent="filterByCategory"  class="list-group-item list-group-item-action list-group-item-light p-3" 
+                :href="category.id" v-for="category in categories">
+                  {{ category.name }}
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Side widget-->
+      <div class="card mb-4">
+        <div class="card-header">Acerca de</div>
+        <div class="card-body">Esta es una aplicación de ejemplo utilizando Laravel y Vue. Sigue aprendiendo más en <a href="https://laravel9.netlify.app">laravel9.netlify.app</div>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+</template>
+
+<script>
+  ...
+</script>
+```
+
+Para probar los últimos cambios ejecuta:
+```
+npm run build
+```
+
+Vuelve a abrir la aplicación y verás la página con las categorías y productos devueltos por nuestros controladores.
+
+Para añadir el filtrado por categorías, debemos añadir el evento `click` a los enlaces del menú de categorías mediante la directiva `@click`:
+
+```html
+<a  @click.stop.prevent="filterByCategory"
+    class="list-group-item list-group-item-action list-group-item-light p-3" 
+    :href="category.id"
+    v-for="category in categories">
+      {{ category.name }}
+</a>
+```
+
+En este caso hemos añadido `.stop.propagation` para deter el comportamiento de navegación que tienen por defecto los enlaces. Es importante añadir el `id` de la categoría al atributo `href` ya que lo utilizaremos en la función `filterByCategory`. La implementación de la función será la siguiente:
+
+```js
+filterByCategory: function (event) {
+    let categoria = event.currentTarget.getAttribute('href');
+    axios.get(`/api/products?category=${categoria}`)
+        .then((response) => {
+            console.log(response.data);
+            this.products = response.data;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+```
+
+Vuelve a ejecutar ``npm run build` y prueba los cambios realizados.
 
 ## License
 
