@@ -1,11 +1,13 @@
 # Larael Vuejs app
-## About Laravel
+
+El código de este proyecto contiene una aplicación desarrollada con Laravel y Vue. En este documento se explicarán los pasos que se han dado para realizarlo.
 
 ## Pre-requisitos
+1. Crea un nuevo proyecto de Laravel
+2. Instala la autenticación con Laravel Breeze. 
 
 
-
-## Pasos
+## Guía paso a paso
 
 ### Crear la API con los datos de Productos y Categorias
 
@@ -276,7 +278,7 @@ import 'bootstrap'
 ...
 ```
 
-Ejecuta el comando `npm run dev` en una nueva terminal.
+Ejecuta el comando `npm run dev` o `npm run build` en una nueva terminal.
 
 Para probar que todo ha funcionado correctamente, crea una nueva vista llamada `home.blade.php` con el siguiente contenido:
 
@@ -365,62 +367,29 @@ Para probar que todo ha funcionado correctamente, crea una nueva vista llamada `
           </div>
         </div>
       </div>
-      <!-- Pagination-->
-      <nav aria-label="Pagination">
-        <hr class="my-0" />
-        <ul class="pagination justify-content-center my-4">
-          <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-          <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-          <li class="page-item"><a class="page-link" href="#!">2</a></li>
-          <li class="page-item"><a class="page-link" href="#!">3</a></li>
-          <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-          <li class="page-item"><a class="page-link" href="#!">15</a></li>
-          <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-        </ul>
-      </nav>
+      
     </div>
     <!-- Side widgets-->
     <div class="col-lg-4">
       <!-- Categories widget-->
       <div class="card mb-4">
-        <div class="card-header">Categories v2</div>
+        <div class="card-header">Categories</div>
         <div class="card-body p-0">
           <div class="list-group list-group-flush">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 1</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 2</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 3</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 4</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Category 5</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
           </div>
         </div>
       </div>
-      <!-- Categories widget-->
-      <div class="card mb-4">
-        <div class="card-header">Categories</div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-6">
-              <ul class="list-unstyled mb-0">
-                <li><a href="#!">Web Design</a></li>
-                <li><a href="#!">HTML</a></li>
-                <li><a href="#!">Freebies</a></li>
-              </ul>
-            </div>
-            <div class="col-sm-6">
-              <ul class="list-unstyled mb-0">
-                <li><a href="#!">JavaScript</a></li>
-                <li><a href="#!">CSS</a></li>
-                <li><a href="#!">Tutorials</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <!-- Side widget-->
       <div class="card mb-4">
-        <div class="card-header">Side Widget</div>
-        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+        <div class="card-header">Acerca de</div>
+        <div class="card-body">Esta es una aplicación de ejemplo utilizando Laravel y Vue. Sigue aprendiendo más en <a href="https://laravel9.netlify.app">laravel9.netlify.app</div>
       </div>
     </div>
   </div>
@@ -434,6 +403,8 @@ Para probar que todo ha funcionado correctamente, crea una nueva vista llamada `
 </body>
 </html>
 ```
+
+Puedes obtener también el enlace con la plantilla HTML utilizada [aquí](https://codepen.io/jonvadillo/pen/GRBzOyE).
 
 #### Instalar Vue
 
