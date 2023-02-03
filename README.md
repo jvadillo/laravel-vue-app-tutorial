@@ -685,7 +685,6 @@ Ahora que ya tenemos definidos los datos del componente y la carga de los mismos
   </div>
 </div>
 </template>
-</template>
 
 <script>
   ...
